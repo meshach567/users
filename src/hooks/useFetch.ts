@@ -1,20 +1,31 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { User } from '../types/User';
-export const useFetchUsers = () => {
+
+const useFetchUsers = () => {
   const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
-    axios
-      .get<User[]>('https://jsonplaceholder.typicode.com/users')
-      .then((response) => {
-        setUsers(response.data);
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/users');
+        if (!response.ok) {
+          throw new Error('Failed to fetch users');
+        }
+        const data = await response.json();
+        setUsers(data);
+      } catch (error) {
+        setError((error as Error).message);
+      } finally {
         setLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching users:', error);
-        setLoading(false);
-      });
+      }
+    };
+
+    fetchUsers();
   }, []);
-  return { users, loading };
+
+  return { users, loading, error };
 };
+
+export default useFetchUsers;

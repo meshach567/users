@@ -1,37 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router';
-import { User } from '../types/User';
-import axios from 'axios';
-const UserDetailsPage: React.FC = () => {
+import { useParams, Link } from 'react-router-dom';
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  website: string;
+}
+
+const UserDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    axios
-      .get<User>(`https://jsonplaceholder.typicode.com/users/${id}`)
-      .then((response) => {
-        setUser(response.data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+    fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
+      .then((response) => response.json())
+      .then((data) => setUser(data));
   }, [id]);
-  if (loading) return <p className="text-center">Loading...</p>;
-  if (!user) return <p className="text-center">User not found</p>;
+
+  if (!user) return <div>Loading...</div>;
+
   return (
-    <div className="container mx-auto p-4">
-      <Link to="/" className="text-blue-500 mb-4 inline-block">
-        ← Back to Users
-      </Link>
-      <h1 className="text-3xl font-bold">{user.name}</h1>
-      <p className="text-lg">@{user.username}</p>
-      <p>Email: {user.email}</p>
-      <p>Phone: {user.phone}</p>
-      <p>Website: {user.website}</p>
-      <p>Company: {user.company.name}</p>
-      <p>
-        Address: {user.address.street}, {user.address.city}
-      </p>
+    <div className="container mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-4">{user.name}</h1>
+      <p><strong>Email:</strong> {user.email}</p>
+      <p><strong>Phone:</strong> {user.phone}</p>
+      <p><strong>Website:</strong> {user.website}</p>
+      <Link to="/" className="mt-6 inline-block text-blue-500 hover:underline">Back to Home</Link>
     </div>
   );
 };
-export default UserDetailsPage;
+
+export default UserDetails;
