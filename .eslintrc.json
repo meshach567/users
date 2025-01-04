@@ -1,0 +1,13 @@
+{
+    "extends": [
+      "next/core-web-vitals",
+      "next/typescript",
+      "plugin:storybook/recommended"
+    ],
+    "globals": {
+      "React": "readonly"
+    },
+    "rules": {
+      "no-unused-vars": "warn"
+    }
+  }
