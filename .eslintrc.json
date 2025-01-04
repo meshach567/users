@@ -1,13 +1,30 @@
 {
-    "extends": [
-      "next/core-web-vitals",
-      "next/typescript",
-      "plugin:storybook/recommended"
-    ],
-    "globals": {
-      "React": "readonly"
-    },
-    "rules": {
-      "no-unused-vars": "warn"
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "standard-with-typescript",
+    "plugin:import/typescript",
+    "eslint:recommended",
+    "plugin:prettier/recommended"
+  ],
+  "globals": {
+    "React": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "overrides": [],
+
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     }
+  },
+  "plugins": ["react", "prettier"],
+  "rules": {
+    "@typescript-eslint/triple-slash-reference": "off",
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error"
   }
+}

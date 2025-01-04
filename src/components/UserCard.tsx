@@ -1,10 +1,10 @@
-import React from 'react';
-import { User } from '../types/User';
-import { Link } from 'react-router';
+import React from "react";
+import {User} from "../types/User";
+import {Link} from "react-router";
 interface UserCardProps {
   user: User;
 }
-const UserCard: React.FC<UserCardProps> = ({ user }) => {
+const UserCard: React.FC<UserCardProps> = ({user}) => {
   return (
     <div className="p-4 border rounded shadow hover:shadow-lg transition">
       <h2 className="text-lg font-semibold">{user.name}</h2>
