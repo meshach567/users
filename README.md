@@ -21,7 +21,7 @@ and best practices for clean and maintainable code.
 1. Clone the repository:
 ```bash
 git clone users
-cd user-list-react
+cd users
 ```bash
 2 . Install dependencies:
 npm install
